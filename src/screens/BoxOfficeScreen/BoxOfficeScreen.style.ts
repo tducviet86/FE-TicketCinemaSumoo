@@ -1,0 +1,132 @@
+import { StyleSheet } from "react-native";
+const palette = {
+  bg: "#F7F7FA",
+  card: "#FFFFFF",
+  text: "#111827",
+  textDim: "#6B7280",
+  line: "#E5E7EB",
+  accent2: "#2563EB",
+};
+/* =============== Styles =============== */
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: palette.bg },
+
+  sectionHeader: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  sectionTitle: { fontSize: 18, fontWeight: "900", color: palette.text },
+
+  boxHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    paddingBottom: 6,
+    gap: 8,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: palette.line,
+  },
+  backIconBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: palette.line,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  backIconText: {
+    fontSize: 22,
+    fontWeight: "900",
+    color: palette.text,
+    lineHeight: 22,
+  },
+  boxTheaterName: { fontSize: 16, fontWeight: "900", color: palette.text },
+  boxTheaterAddr: { color: palette.textDim, marginTop: 2, fontWeight: "600" },
+  dayStrip: { height: 60 },
+
+  dayRow: { flexDirection: "row", paddingHorizontal: 12, paddingBottom: 0 },
+  dayChip: {
+    width: 86,
+    paddingVertical: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: palette.line,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    marginRight: 10,
+  },
+  dayChipActive: { backgroundColor: "#DBEAFE", borderColor: palette.accent2 },
+  dayTop: { fontSize: 12, color: palette.textDim, fontWeight: "800" },
+  dayTopActive: { color: palette.accent2 },
+  dayBot: {
+    marginTop: 4,
+    fontSize: 14,
+    color: palette.text,
+    fontWeight: "900",
+  },
+  dayBotActive: { color: palette.accent2 },
+
+  movieCard: {
+    backgroundColor: "#FFFFFF",
+    marginHorizontal: 12,
+    marginTop: 12,
+    borderRadius: 16,
+    padding: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: palette.line,
+  },
+  movieRow: { flexDirection: "row", gap: 12, marginBottom: 12 },
+  moviePoster: {
+    width: 68,
+    height: 98,
+    borderRadius: 12,
+    backgroundColor: "#EEE",
+  },
+  movieTitle: { fontWeight: "900", color: palette.text, fontSize: 15 },
+  movieMeta: {
+    color: palette.textDim,
+    marginTop: 3,
+    marginBottom: 4,
+    fontWeight: "700",
+  },
+
+  timeRow: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
+  timePill: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+  },
+  timeText: { fontWeight: "900", textAlign: "center" },
+  timePrice: {
+    marginLeft: 4,
+    color: palette.textDim,
+    fontWeight: "800",
+    fontSize: 12,
+  },
+
+  backBtn: {
+    marginTop: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: palette.line,
+    backgroundColor: "#fff",
+  },
+  backBtnText: { fontWeight: "900", color: palette.text },
+});
+export default styles;
