@@ -4,11 +4,11 @@
     "slug": "FE-SumooCinema",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/splash-bg.jpeg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash-bg.jpeg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

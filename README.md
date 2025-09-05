@@ -1,1 +1,1 @@
-# FE-TicketCinemaSumoo
+# 🎬 Cinema Home UI (React Native + TypeScript)
