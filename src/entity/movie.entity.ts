@@ -9,6 +9,18 @@ export interface MovieGenre {
   genre: Genre;
 }
 
+export interface Cinema {
+  id: string;
+  name: string;
+  address: string;
+}
+
+export interface Room {
+  id: string;
+  name: string;
+  cinema: Cinema;
+}
+
 export interface Showtime {
   id: string;
   movieId: string;
@@ -16,8 +28,9 @@ export interface Showtime {
   startTime: string;
   endTime: string;
   price: number;
-}
 
+  room: Room;
+}
 export interface Movie {
   id: string;
   title: string;

@@ -48,13 +48,18 @@ export const getMovieById = createAsyncThunk<
 >(
   "movies/getMovieById",
   async (movieId, { rejectWithValue }) => {
+
     try {
-      const response = await authInstance.get<Movie>(`/movies/${movieId}`);
+      const response = await authInstance.get(`/movies/${movieId}`);
+
+
       return response.data;
     } catch (error: any) {
+      console.log(error);
+
       return rejectWithValue(
         error.response?.data?.message || "Lấy chi tiết phim thất bại"
       );
     }
   }
-)
+);

@@ -54,6 +54,7 @@ const homeSlice = createSlice({
         state.error = null;
       })
       .addCase(getMovieById.fulfilled, (state, action) => {
+
         state.loading = false;
         state.detailMovie = action.payload;
       })

@@ -2,7 +2,9 @@ import axios from "axios";
 import type { Store } from "@reduxjs/toolkit";
 let store: Store | undefined;
 
-export const HOST = "http://192.168.1.38:3000";
+// export const HOST = "http://192.168.1.38:3000";
+export const HOST = "https://be-cinemasumoo.up.railway.app";
+
 
 export const injectStore = (_store: Store) => {
   store = _store;
