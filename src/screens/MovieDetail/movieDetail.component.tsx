@@ -7,6 +7,7 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
+import Modal from "react-native-modal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -18,7 +19,6 @@ import { HomeStackParamList } from "../../entity/navigation.entity";
 import { AppDispatch, RootState } from "../../store/store";
 import { getMovieById } from "../../store/Home/home.thunk";
 import { Showtime } from "../../entity/movie.entity";
-
 type DetailMovieRouteProp = RouteProp<
   HomeStackParamList,
   "DetailMovie"
@@ -47,12 +47,10 @@ export const MovieDetailScreen = () => {
   }, [dispatch, movieId]);
 
   const [selectedDay, setSelectedDay] = useState(0);
-
-
-
-  // ========================
+  const [visible, setVisible] = useState(false);
+  const [selectedShowtime, setSelectedShowtime] = useState<Showtime | null>(null);
+  const [goSeat, setGoSeat] = useState(false);
   // Danh sách ngày
-  // ========================
 
   const uniqueDates = useMemo(() => {
     if (!movie.showtimes?.length) return [];
@@ -84,10 +82,7 @@ export const MovieDetailScreen = () => {
     return [...map.values()];
   }, [movie.showtimes]);
 
-  // ========================
   // Gom theo rạp
-  // ========================
-
   const groupedCinema = useMemo(() => {
     if (!movie.showtimes?.length) return {};
 
@@ -120,10 +115,7 @@ export const MovieDetailScreen = () => {
     );
   }, [movie.showtimes, uniqueDates, selectedDay]);
 
-  // ========================
   // Giá nhỏ nhất
-  // ========================
-
   const minPrice = useMemo(() => {
     const selectedDate = uniqueDates[selectedDay];
 
@@ -157,11 +149,11 @@ export const MovieDetailScreen = () => {
       </SafeAreaView>
     );
   }
-  return (
+  return <>
     <SafeAreaView style={styles.container} edges={["top"]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 130 }}
+      // contentContainerStyle={{ paddingBottom: 130 }}
       >
         <View style={styles.banner}>
           <Image
@@ -257,22 +249,20 @@ export const MovieDetailScreen = () => {
               </Text>
             </View>
 
-            <TouchableOpacity
-              style={styles.trailerBtn}
-              onPress={() =>
-                Linking.openURL(movie.trailerUrl)
-              }
+            <LinearGradient
+              colors={["#ec6149", "#894969"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.trailerGradient}
             >
-              <Ionicons
-                name="play-circle"
-                size={22}
-                color="#fff"
-              />
-
-              <Text style={styles.trailerText}>
-                XEM TRAILER
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.trailerBtn}
+                onPress={() => Linking.openURL(movie.trailerUrl)}
+              >
+                <Ionicons name="play-circle" size={22} color="#fff" />
+                <Text style={styles.trailerText}>XEM TRAILER</Text>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </View>
 
@@ -354,11 +344,10 @@ export const MovieDetailScreen = () => {
                       <TouchableOpacity
                         key={show.id}
                         style={styles.timeButton}
-                        onPress={() =>
-                          navigation.navigate("Seat", {
-                            showtimeId: show.id,
-                          })
-                        }
+                        onPress={() => {
+                          setSelectedShowtime(show);
+                          setVisible(true);
+                        }}
                       >
                         <Text style={styles.timeText}>
                           {formatTime(show.startTime)}
@@ -371,30 +360,65 @@ export const MovieDetailScreen = () => {
           )}
         </View>
       </ScrollView>
-
-      <View style={styles.bottomBar}>
-        <View>
-          <Text style={styles.priceLabel}>
-            Giá từ
-          </Text>
-
-          <Text style={styles.price}>
-            {minPrice.toLocaleString()}đ
-          </Text>
-        </View>
-
-        <TouchableOpacity style={styles.bookButton}>
-          <Ionicons
-            name="ticket"
-            size={18}
-            color="#fff"
-          />
-
-          <Text style={styles.bookText}>
-            Chọn ghế
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
-  );
+
+    <Modal
+      isVisible={visible}
+      animationIn="bounceInUp"
+      animationOut="fadeOutDown"
+      backdropOpacity={0.7}
+      useNativeDriver
+      hideModalContentWhileAnimating
+      onModalHide={() => {
+        if (goSeat && selectedShowtime) {
+          navigation.navigate("Seat", {
+            showtimeId: selectedShowtime?.id,
+          });
+
+          setGoSeat(false);
+          setSelectedShowtime(null);
+        }
+      }}
+    >
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalTitle}>
+          Xác nhận độ tuổi
+        </Text>
+
+        <Text style={styles.modalContent}>
+          Phim này được phân loại T18.
+          {"\n\n"}
+          Bạn xác nhận mình đã đủ 18 tuổi và muốn tiếp tục đặt vé?
+        </Text>
+
+        <View style={styles.modalButtonRow}>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => {
+              setVisible(false);
+              setSelectedShowtime(null);
+            }}
+          >
+            <Text style={styles.cancelText}>
+              Huỷ
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={() => {
+              setGoSeat(true);
+              setVisible(false);
+            }}
+          >
+            <Text style={styles.confirmText}>
+              Tiếp tục
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+
+  </>
+
 };

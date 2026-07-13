@@ -5,11 +5,11 @@ const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fbf8f1',
   },
   headerTab: {
     height: 50,
-    backgroundColor: '#fcf9f2',
+    backgroundColor: '#fbf8f1',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -148,22 +148,27 @@ export default StyleSheet.create({
     marginHorizontal: 14,
   },
 
-  trailerBtn: {
+  trailerGradient: {
     height: 52,
     borderRadius: 14,
-    backgroundColor: '#E91E63',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    overflow: "hidden",
   },
-
+  
+  trailerBtn: {
+    flex: 1,
+    borderRadius: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "transparent", 
+  },
+  
   trailerText: {
-    color: '#fff',
-    fontWeight: '700',
-    marginLeft: 8,
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 15,
+    marginLeft: 8,
   },
-
   content: {
     padding: 18,
   },
@@ -227,7 +232,7 @@ export default StyleSheet.create({
   },
 
   cinemaCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#F8FAFC',
     borderRadius: 18,
     padding: 18,
     marginBottom: 18,
@@ -326,5 +331,75 @@ export default StyleSheet.create({
     fontWeight: '800',
     marginLeft: 8,
     fontSize: 16,
+  },
+  //modal
+  modalContainer: {
+    backgroundColor: "#1E1E1E",
+    borderRadius: 20,
+    padding: 24,
+  },
+  
+  modalIcon: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: "#FF4D4F",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginBottom: 18,
+  },
+  
+  modalTitle: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  
+  modalContent: {
+    color: "#BFBFBF",
+    fontSize: 15,
+    textAlign: "center",
+    lineHeight: 24,
+    marginTop: 12,
+  },
+  
+  modalButtonRow: {
+    flexDirection: "row",
+    marginTop: 28,
+  },
+  
+  cancelButton: {
+    flex: 1,
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#555",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 8,
+  },
+  
+  confirmButton: {
+    flex: 1,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: "#E91E63",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 8,
+  },
+  
+  cancelText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  
+  confirmText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
