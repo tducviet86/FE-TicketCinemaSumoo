@@ -265,7 +265,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#6d0000',
   },
-
+  loadingContainer:{
+    width: 350,
+    justifyContent: "center",
+    alignItems: "center",
+  
+  },
   subText: {
     marginTop: 5,
     fontSize: 14,

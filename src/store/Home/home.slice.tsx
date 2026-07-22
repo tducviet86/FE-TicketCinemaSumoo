@@ -6,7 +6,9 @@ interface HomeState {
   list: Movie[];
   listComing: Movie[];
   detailMovie: Movie;
-  loading: boolean;
+  loadingNowShowing: boolean;
+  loadingComing: boolean;
+  loadingDetail: boolean;
   error: string | null;
 }
 
@@ -14,7 +16,9 @@ const INIT_STATE: HomeState = {
   list: [],
   listComing: [],
   detailMovie: {} as Movie,
-  loading: false,
+  loadingNowShowing: false,
+  loadingComing: false,
+  loadingDetail: false,
   error: null,
 };
 
@@ -25,41 +29,41 @@ const homeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMovieNowShowing.pending, (state) => {
-        state.loading = true;
+        state.loadingNowShowing = true;
         state.error = null;
       })
       .addCase(getMovieNowShowing.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loadingNowShowing = false;
         state.list = action.payload;
       })
       .addCase(getMovieNowShowing.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingNowShowing = false;
         state.error = action.payload ?? "Có lỗi xảy ra";
       })
 
       .addCase(getMovieUpComing.pending, (state) => {
-        state.loading = true;
+        state.loadingComing = true;
         state.error = null;
       })
       .addCase(getMovieUpComing.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loadingComing = false;
         state.listComing = action.payload;
       })
       .addCase(getMovieUpComing.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingComing = false;
         state.error = action.payload ?? "Có lỗi xảy ra";
       })
       .addCase(getMovieById.pending, (state) => {
-        state.loading = true;
+        state.loadingDetail = true;
         state.error = null;
       })
       .addCase(getMovieById.fulfilled, (state, action) => {
 
-        state.loading = false;
+        state.loadingDetail = false;
         state.detailMovie = action.payload;
       })
       .addCase(getMovieById.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingDetail = false;
         state.error = action.payload ?? "Có lỗi xảy ra";
       });
   },

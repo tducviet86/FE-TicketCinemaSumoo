@@ -8,6 +8,11 @@ const store = configureStore({
     auth: AuthSlice,
     home:HomeSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    }),
 });
 injectStore(store);
 

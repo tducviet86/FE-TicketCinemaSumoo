@@ -6,6 +6,8 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
+  StatusBar
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './HomePage.style';
@@ -25,19 +27,24 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 const HomePage = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>()
   const movie = useSelector((state: RootState) => state.home.list)
-  const loading = useSelector((state: RootState) => state.home.loading);
+  const loadingNowShowing = useSelector((state: RootState) => state.home.loadingNowShowing);
   const error = useSelector((state: RootState) => state.home.error);
   const listMovieComing = useSelector((state: RootState) => state.home.listComing)
+  const loadingUpShowing = useSelector((state: RootState) => state.home.loadingComing);
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getMovieNowShowing())
     dispatch(getMovieUpComing())
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="#fcf9f2"
+        animated
+      />
       <View style={styles.header}>
         <View style={styles.logoWrapper}>
           <Image
@@ -93,25 +100,33 @@ const HomePage = () => {
             <Text style={styles.sectionTitle}>PHIM ĐANG CHIẾU</Text>
             <Text style={styles.seeAll}>XEM TẤT CẢ</Text>
           </View>
+          {loadingNowShowing ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#ff3d00" />
+            </View>
+          ) : (
 
-          <ScrollView horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.movieList}>
-            {movie.map((item) => (
-              <TouchableOpacity key={item.id} style={styles.movieCard} onPress={() => navigation.navigate('DetailMovie', {movieId: item.id})}>
-                <Image source={{uri:item.posterUrl}} style={styles.movieImage} />
+            <ScrollView horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.movieList}>
+              {
+                movie.map((item) => (
+                  <TouchableOpacity key={item.id} style={styles.movieCard} onPress={() => navigation.navigate('DetailMovie', { movieId: item.id })}>
+                    <Image source={{ uri: item.posterUrl }} style={styles.movieImage} />
 
-                <View style={styles.rating}>
-                  <Text style={styles.ratingText}>{item.rating}</Text>
-                </View>
+                    <View style={styles.rating}>
+                      <Text style={styles.ratingText}>{item.rating}</Text>
+                    </View>
 
-                <Text style={styles.movieName}>{item.title}</Text>
-                <Text style={styles.movieSub}>
-                {item.genres.map((g) => g.genre.name).join(' • ')}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+                    <Text style={styles.movieName}>{item.title}</Text>
+                    <Text style={styles.movieSub}>
+                      {item.genres.map((g) => g.genre.name).join(' • ')}
+                    </Text>
+                  </TouchableOpacity>
+                ))
+              }
+            </ScrollView>
+          )}
         </View>
         <View style={styles.movieSection}>
           <View style={styles.sectionHeader}>
@@ -144,28 +159,34 @@ const HomePage = () => {
             <Text style={styles.sectionTitle}>SẮP KHỞI CHIẾU</Text>
             <Text style={styles.seeAll}>TẤT CẢ</Text>
           </View>
-          <ScrollView horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.movieList}>
-            {listMovieComing.map((item) => (
-              <View key={item.id} style={styles.comingMovieCard}>
+          {loadingUpShowing ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#ff3d00" />
+            </View>
+          ) : (
+            <ScrollView horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.movieList}>
 
-                <View style={styles.imageWrapper}>
-                  <Image source={{uri:item.posterUrl}} style={styles.comingMovieImage} />
-                  <View style={styles.comingGradient} />
+              {listMovieComing.map((item) => (
+                <View key={item.id} style={styles.comingMovieCard}>
 
-                  <View style={styles.date}>
-                    <View style={styles.dateBox}>
-                      <Text style={styles.dateText}> {new Date(item.releaseDate).toLocaleDateString("vi-VN")}</Text>
+                  <View style={styles.imageWrapper}>
+                    <Image source={{ uri: item.posterUrl }} style={styles.comingMovieImage} />
+                    <View style={styles.comingGradient} />
+
+                    <View style={styles.date}>
+                      <View style={styles.dateBox}>
+                        <Text style={styles.dateText}> {new Date(item.releaseDate).toLocaleDateString("vi-VN")}</Text>
+                      </View>
                     </View>
                   </View>
+
+                  <Text style={styles.movieName}>{item.title}</Text>
                 </View>
-
-                <Text style={styles.movieName}>{item.title}</Text>
-              </View>
-            ))}
-          </ScrollView>
-
+              ))}
+            </ScrollView>
+          )}
         </View>
         <View style={styles.discountTicket}>
           <View style={styles.discountTicketCard}>

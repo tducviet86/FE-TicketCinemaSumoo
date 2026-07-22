@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fbf8f1',
+    backgroundColor: '#fcf9f2',
   },
   headerTab: {
     height: 50,
