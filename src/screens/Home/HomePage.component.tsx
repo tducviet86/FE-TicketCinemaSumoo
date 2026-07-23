@@ -18,12 +18,11 @@ import { useEffect } from 'react';
 import { getMovieNowShowing, getMovieUpComing } from '../../store/Home/home.thunk';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../entity/navigation.entity';
+import { HomeStackParamList, RootStackParamList} from '../../entity/navigation.entity';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  HomeStackParamList,
-  "Home"
->;
+type HomeScreenNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
+
 const HomePage = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>()
   const movie = useSelector((state: RootState) => state.home.list)
@@ -111,7 +110,7 @@ const HomePage = () => {
               contentContainerStyle={styles.movieList}>
               {
                 movie.map((item) => (
-                  <TouchableOpacity key={item.id} style={styles.movieCard} onPress={() => navigation.navigate('DetailMovie', { movieId: item.id })}>
+                  <TouchableOpacity key={item.id} style={styles.movieCard} onPress={() => navigation.navigate('MovieDetail', { movieId: item.id })}>
                     <Image source={{ uri: item.posterUrl }} style={styles.movieImage} />
 
                     <View style={styles.rating}>

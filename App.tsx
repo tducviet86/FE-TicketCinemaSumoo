@@ -11,6 +11,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomePage from "./src/screens/Home/HomePage.component";
 import TheaterSystemUI from "./src/screens/Ticket/ticket.component";
 import BoxOfficeScreen from "./src/screens/BoxOfficeScreen/BoxOfficeScreen.component";
+import SeatScreen from "./src/screens/Seat/seat.components";
 import AuthScreen from "./src/screens/Auth/Auth.component";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -33,10 +34,10 @@ const TicketStack = () => (
     <TicketStackNavigator.Screen name="BoxOffice" component={BoxOfficeScreen} />
   </TicketStackNavigator.Navigator>
 );
+
 const HomeStack = () => (
   <HomeStackNavigator.Navigator screenOptions={{ headerShown: false }}>
     <HomeStackNavigator.Screen name="Home" component={HomePage} />
-    <HomeStackNavigator.Screen name="DetailMovie" component={MovieDetailScreen} />
   </HomeStackNavigator.Navigator>
 )
 // ================= MAIN TAB =================
@@ -109,7 +110,11 @@ const RootNavigator = () => {
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {token ? (
+          <>
           <RootStack.Screen name="MainApp" component={MainTab} />
+          <RootStack.Screen name="SeatMovie" component={SeatScreen} />
+          <RootStack.Screen name="MovieDetail" component={MovieDetailScreen} />
+          </>
         ) : (
           <RootStack.Screen name="Auth" component={AuthStack} />
         )}

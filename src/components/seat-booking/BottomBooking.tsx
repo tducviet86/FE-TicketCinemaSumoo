@@ -32,58 +32,6 @@ const BottomBooking = ({
 
   return (
     <View style={styles.bottomContainer}>
-      {seatCount > 0 && (
-        <View style={styles.priceCard}>
-          <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>
-              Ghế đã chọn
-            </Text>
-
-            <TouchableOpacity
-              onPress={onClear}
-            >
-              <Text
-                style={{
-                  color: "#EF4444",
-                  fontWeight: "700",
-                }}
-              >
-                Xóa
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={[
-              styles.priceRow,
-              {
-                flexWrap: "wrap",
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.priceValue,
-                {
-                  flex: 1,
-                },
-              ]}
-            >
-              {seatCodes.join(", ")}
-            </Text>
-          </View>
-
-          <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>
-              Tổng cộng
-            </Text>
-
-            <Text style={styles.totalValue}>
-              {formatPrice(totalPrice)}
-            </Text>
-          </View>
-        </View>
-      )}
 
       <View style={styles.bookingRow}>
         <View style={styles.bookingLeft}>

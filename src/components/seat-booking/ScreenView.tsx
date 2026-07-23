@@ -15,7 +15,7 @@ const ScreenView = () => {
       <View style={styles.screenShadow} />
 
       <Text style={styles.screenText}>
-        SCREEN
+        Màn Hình
       </Text>
     </View>
   );

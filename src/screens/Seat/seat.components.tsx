@@ -2,88 +2,94 @@ import React, { useEffect, useMemo } from "react";
 import {
   ActivityIndicator,
   ScrollView,
-  View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-
-
+import {
+  SafeAreaView,
+} from "react-native-safe-area-context";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import {
+  useDispatch,
+  useSelector,
+} from "react-redux";
 
 import { AppDispatch, RootState } from "../../store/store";
-
-import { HomeStackParamList } from "../../entity/navigation.entity";
-
+import { RootStackParamList } from "../../entity/navigation.entity";
 
 import styles from "./seat.style";
+
+import { getSeatByShowtime } from "../../store/Seat/seat.thunk";
+
 import { useSeatSelection } from "../../hooks/useSeatSelection";
 import { groupSeat } from "../../helpers/groupSeat";
+
 import SeatHeader from "../../components/seat-booking/SeatHeader";
 import ScreenView from "../../components/seat-booking/ScreenView";
 import SeatMap from "../../components/seat-booking/SeatMap";
 import SeatLegend from "../../components/seat-booking/SeatLegend";
 import BottomBooking from "../../components/seat-booking/BottomBooking";
 
-// import { getSeatByShowtime } from "../../store/Seat/seat.thunk";
-
-type SeatRouteProp = RouteProp<HomeStackParamList, "Seat">;
+type SeatRouteProp = RouteProp<RootStackParamList, "SeatMovie">;
 
 const SeatScreen = () => {
   const navigation = useNavigation<any>();
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { showtimeId } = useRoute<SeatRouteProp>().params;
+  const { showtimeId } =
+    useRoute<SeatRouteProp>().params;
+  console.log("🚀 ~ file: seat.components.tsx:49 ~ SeatScreen ~ showtimeId:", showtimeId);
 
   /*
-      Redux
-  */
+   * Redux
+   */
 
   const {
-    seats = [],
-    loading = false,
+    movie,
+    cinema,
+    room,
     showtime,
+    seats,
+    loading,
+    error,
   } = useSelector((state: RootState) => state.seat);
 
   /*
-      Load Seat
-  */
+   * Load Seat
+   */
 
   useEffect(() => {
-    // dispatch(getSeatByShowtime(showtimeId));
+    dispatch(getSeatByShowtime(showtimeId));
   }, [dispatch, showtimeId]);
 
   /*
-      Hook chọn ghế
-  */
+   * Hook chọn ghế
+   */
 
   const {
     selectedSeats,
-
     seatCodes,
-
     seatCount,
-
     totalPrice,
-
     toggleSeat,
-
     isSelected,
-
     clearSeats,
   } = useSeatSelection();
 
   /*
-      Gom theo hàng
-  */
+   * Gom ghế theo hàng
+   */
 
   const groupedSeat = useMemo(() => {
     return groupSeat(seats);
   }, [seats]);
 
   /*
-      Loading
-  */
+   * Loading
+   */
 
   if (loading) {
     return (
@@ -101,9 +107,13 @@ const SeatScreen = () => {
       edges={["top"]}
     >
       <SeatHeader
+        movie={movie}
+        cinema={cinema}
+        room={room}
         showtime={showtime}
         onBack={() => navigation.goBack()}
       />
+
 
       <ScrollView
         style={styles.body}
@@ -132,7 +142,7 @@ const SeatScreen = () => {
           navigation.navigate("ConfirmBooking", {
             showtimeId,
             seatIds: selectedSeats.map(
-              (s) => s.id
+              (item) => item.id
             ),
           });
         }}

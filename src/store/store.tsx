@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import AuthSlice from "./Auth/auth.slice";
 import HomeSlice from "./Home/home.slice";
 import { injectStore } from "../helpers/api";
+import seatSlice from './Seat/seat.slice';
 
 const store = configureStore({
   reducer: {
     auth: AuthSlice,
     home:HomeSlice,
+    seat:seatSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

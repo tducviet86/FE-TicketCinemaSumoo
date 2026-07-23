@@ -12,22 +12,18 @@ export enum SeatStatus {
 
 export interface Seat {
   id: string;
-
   code: string;
-
   row: string;
-
   number: number;
 
+  roomId?: string; 
+
   type: SeatType;
-
   status: SeatStatus;
-
   price: number;
 }
 
 export interface SeatRow {
   row: string;
-
   seats: Seat[];
 }

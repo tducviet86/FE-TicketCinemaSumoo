@@ -1,11 +1,12 @@
 export type HomeStackParamList = {
   Home: undefined;
-  DetailMovie: { movieId: string };
 };
 
 export type RootStackParamList = {
   MainApp: undefined;
   Auth: undefined;
+  SeatMovie: { showtimeId: string };
+  MovieDetail: { movieId: string };
 };
 
 export type TicketStackParamList = {
